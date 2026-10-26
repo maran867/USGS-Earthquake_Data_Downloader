@@ -4,8 +4,8 @@ ABOUT THE PROJECT :
         
 
 TECHNOLOGIES USED:
-   Python
-   Pathib
-   Json
-   Requests
-   USGS API
+   Python,
+   Pathib,
+   Json,
+   Requests,
+   USGS API .
