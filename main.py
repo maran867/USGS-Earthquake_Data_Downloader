@@ -1,12 +1,12 @@
-#import requests
-#import pandas as pd
-#import geopandas as gpd
+import requests
+import pandas as pd
+import geopandas as gpd
 
 from datetime import datetime
 from pathlib import  Path
 
 
-#user Input section :
+#USER INPUT SECTION 
 
 def get_start_end_dates():
 
@@ -17,13 +17,18 @@ def get_start_end_dates():
     magnitude=input("ENTER MAGNITUDE: in decimal format (e.g. 5.0): ")
 
     return start_date, end_date, magnitude
-print(get_start_end_dates()) 
 
+
+
+#REQUESTING DATA FROM USGIS API
 def request_data(start_date,end_date,magnitude):
     url=None
-    response=requests.get(url)
+    response=requests.get(url) 
     data=response.json()
 
     return data
+
+
+
 def save_data(data):
-    
+
