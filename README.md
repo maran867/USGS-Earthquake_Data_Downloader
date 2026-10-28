@@ -8,4 +8,6 @@ TECHNOLOGIES USED:
    Pathib,
    Json,
    Requests,
-   USGS API .
+   USGS earthquake API,
+   Folium .
+   
