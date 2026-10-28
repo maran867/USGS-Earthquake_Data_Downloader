@@ -10,7 +10,7 @@ from pathlib import Path
 
 def get_start_end_dates():
     #getting user input for the start date and end date and magnitude.
-    while True:
+    while True: 
        start_date_str = input("ENTER THE STARTING DATE HERE: in YYYY-MM-DD format (e.g. 2023-01-01): ")
        try:
            #checking the input date is in correct format or not
@@ -18,8 +18,8 @@ def get_start_end_dates():
            break
        except ValueError:
            print(f"{start_date_str} Entered date format is not correct. Please try again.")
-
-    while True:
+           
+    while True:  
         end_date_str = input("ENTER THE ENDING DATE HERE: in YYYY-MM-DD format (e.g. 2023-01-31): ")
         try:
             end_date = date.fromisoformat(end_date_str)
@@ -29,7 +29,7 @@ def get_start_end_dates():
                 break
         except ValueError:
             print(f"{end_date_str} Entered date format is not correct. Please try again.")
-
+            
     while True:
         try:
             magnitude_str = input("ENTER MAGNITUDE: in decimal format (e.g. 5.0): ")
@@ -37,7 +37,7 @@ def get_start_end_dates():
             break
         except ValueError:
             print(f"{magnitude_str} Entered magnitude format is not correct. Please try again.")
-
+            
     return start_date, end_date, magnitude
 
 
@@ -47,7 +47,7 @@ def request_data(start_date, end_date, magnitude):
     url = f"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=magnitude-asc&starttime={start_date}&endtime={end_date}&minmagnitude={magnitude}"
     response = requests.get(url, timeout=10)
     data = response.json()
-    print(data)
+    print("Earthquakes returned:", data["metadata"]["count"])
     return data
 
 
@@ -65,17 +65,19 @@ def format_change(data):
 
 #VISUALIZING THE DATA IN FOLIUM MAP
 def visualize_data(gdf):
-    m=folium.Map(Location=[gdf.geometry.y.mean(),gdf.geometry.x.mean()],
+    # Center using mean Latitude (y) and Longitude (x)
+    m=folium.Map(location=[gdf.geometry.y.mean(),gdf.geometry.x.mean()],
                  zoom_start=2,tiles="Esri.WorldImagery",attr="Esri,USGS")
-
-    for _, row in gdf.iterows():
-        folium.CircleMarker(Location=[row.geometry.y,row.geometry.x],
-                            radius=5,color="red",fill="TRUE",
+                 
+    for _, row in gdf.iterrows():
+        # Swapped coordinates to [Latitude (y), Longitude (x)] for Folium compatibility
+        folium.CircleMarker(location=[row.geometry.y, row.geometry.x],
+                            radius=5,color="red",fill="True",
                             fill_color="red",fill_opacity=0.7,
                             popup=f"magnitude:{row['mag']}",
                             tooltip=f"Place:{row['place']}"
                             ).add_to(m)
-    print(m)
+    return m
 
 
 
@@ -99,4 +101,5 @@ step_3=format_change(data)
 
 gdf=step_3
 
-step_4= visualize_data(gdf)
+step_4 = visualize_data(gdf)
+step_4
