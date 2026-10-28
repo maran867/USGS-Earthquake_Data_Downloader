@@ -5,8 +5,10 @@ ABOUT THE PROJECT :
 
 TECHNOLOGIES USED:
    Python,
-   Pathib,
+   Pathlib,
    Json,
+   Pandas,
+   Geopandas,
    Requests,
    USGS earthquake API,
    Folium .
